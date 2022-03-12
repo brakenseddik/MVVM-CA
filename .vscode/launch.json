@@ -1,0 +1,18 @@
+{"args": [
+  "--no-sound-null-safety"
+ ],
+
+ "version": "0.2.0",
+ "configurations": [
+   
+         {
+                 "name": "mvvm",
+                 "program": "lib/main.dart",
+                 "request": "launch",
+                 "type": "dart",
+                 "args": [
+                         "--no-sound-null-safety"
+                     ]
+         }
+ ]
+}
