@@ -16,16 +16,14 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
   Future<Either<Failure, Authentication>> execute(
       LoginUseCaseInput input) async {
     DeviceInfo deviceInfo = await getDeviceDetails();
-    return await _repository.login(LoginRequest(
-        input.email, input.password, deviceInfo.name, deviceInfo.identifier));
+    return await _repository
+        .login(LoginRequest(input.email, input.password));
   }
 }
 
 class LoginUseCaseInput {
   String email;
   String password;
-  LoginUseCaseInput({
-    required this.email,
-    required this.password,
-  });
+
+  LoginUseCaseInput(this.email, this.password);
 }

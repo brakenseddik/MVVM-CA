@@ -8,8 +8,8 @@ part of 'app_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-class _AppServicesClient implements AppServicesClient {
-  _AppServicesClient(this._dio, {this.baseUrl}) {
+class _AppServiceClient implements AppServiceClient {
+  _AppServiceClient(this._dio, {this.baseUrl}) {
     baseUrl ??= 'http://braken.mocklab.io';
   }
 
@@ -18,17 +18,11 @@ class _AppServicesClient implements AppServicesClient {
   String? baseUrl;
 
   @override
-  Future<AuthenticationResponse> login(
-      email, password, imei, deviceType) async {
+  Future<AuthenticationResponse> login(email, password) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {
-      'email': email,
-      'password': password,
-      'imei': imei,
-      'device_type': deviceType
-    };
+    final _data = {'email': email, 'password': password};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AuthenticationResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)

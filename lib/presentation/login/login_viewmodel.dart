@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:mvvm/domain/usecases/login_usecase.dart';
 import 'package:mvvm/presentation/base/base_viewmodel.dart';
 import 'package:mvvm/presentation/shared/freezed_dataclasses.dart';
+import 'package:mvvm/presentation/shared/state_renderer/state_render_impl.dart';
+import 'package:mvvm/presentation/shared/state_renderer/state_renderer.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -17,12 +19,11 @@ class LoginViewModel extends BaseViewModel
 
   var loginObject = LoginObject("", "");
 
-  LoginUseCase _loginUseCase; // todo remove ?
+  LoginUseCase _loginUseCase;
 
   LoginViewModel(this._loginUseCase);
 
   // inputs
-
   @override
   Sink get inputIsAllInputValid => _isAllInputsValidStreamController.sink;
 
@@ -44,7 +45,6 @@ class LoginViewModel extends BaseViewModel
   Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
       .map((userName) => _isUserNameValid(userName));
 
-  // outputs
   @override
   void dispose() {
     _userNameStreamController.close();
@@ -54,19 +54,26 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    (await _loginUseCase.execute(LoginUseCaseInput(
-            email: loginObject.userName, password: loginObject.password)))
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _loginUseCase.execute(
+            LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
                   // left -> failure
-                  log(failure.message.toString())
+                  log(failure.message),
+                  inputState.add(ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE, failure.message))
                 },
             (data) => {
                   // right -> success (data)
-                  log(data.customer!.name)
+                  log(data.toString()),
+                  inputState.add(ContentState()),
+                  // navigate to main screen
                 });
   }
 
+  // outputs
   @override
   setPassword(String password) {
     inputPassword.add(password);
@@ -74,8 +81,6 @@ class LoginViewModel extends BaseViewModel
         password: password); // data class operation same as kotlin
     _validate();
   }
-
-  // private functions
 
   @override
   setUserName(String userName) {
@@ -87,8 +92,10 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // TODO: implement start
+    inputState.add(ContentState());
   }
+
+  // private functions
 
   bool _isAllInputsValid() {
     return _isPasswordValid(loginObject.password) &&

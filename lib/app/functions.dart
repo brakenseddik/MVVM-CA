@@ -27,7 +27,7 @@ Future<DeviceInfo> getDeviceDetails() async {
     }
   } on PlatformException {
     // return default data here
-    return DeviceInfo(identifier, name, version);
+    return DeviceInfo(name, version);
   }
-    return DeviceInfo(identifier, name, version);
+  return DeviceInfo(name, version);
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/app/app.dart';
 import 'package:mvvm/app/di.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initAppModule();
+  await initAppModule();
   runApp(App());
 }
