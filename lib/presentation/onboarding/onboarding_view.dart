@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mvvm/app/app_prefs.dart';
+import 'package:mvvm/app/di.dart';
 import 'package:mvvm/presentation/onboarding/onboarding_viewmodel.dart';
 import 'package:mvvm/presentation/resources/assets_manager.dart';
 import 'package:mvvm/presentation/resources/color_manager.dart';
@@ -16,10 +18,13 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
   final PageController _pageController = PageController();
   final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
 
   _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _onBoardingViewModel.start();
   }
 
@@ -56,7 +61,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         body: PageView.builder(
           controller: _pageController,
           itemCount: data.numOfSlides,
-          onPageChanged:(index)=> _onBoardingViewModel.onPageChanged(index),
+          onPageChanged: (index) => _onBoardingViewModel.onPageChanged(index),
           itemBuilder: (context, index) {
             return OnBoardingItem(sliderObject: data.sliderObject);
           },
@@ -105,7 +110,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               ),
               onTap: () {
                 // go to next slide
-                _pageController.animateToPage(_onBoardingViewModel.onPageChanged(sliderViewObject.currentIndex),
+                _pageController.animateToPage(
+                    _onBoardingViewModel
+                        .onPageChanged(sliderViewObject.currentIndex),
                     duration:
                         const Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);

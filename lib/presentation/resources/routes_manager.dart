@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/app/di.dart';
-import 'package:mvvm/presentation/forgot_password/forgot_password_screen.dart';
+import 'package:mvvm/presentation/forgot_password/forgot_password_view.dart';
 import 'package:mvvm/presentation/login/login_view.dart';
 import 'package:mvvm/presentation/login/login_viewmodel.dart';
 import 'package:mvvm/presentation/main/main_screen.dart';
