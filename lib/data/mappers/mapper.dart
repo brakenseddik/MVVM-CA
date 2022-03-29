@@ -1,11 +1,13 @@
 // convert a respone into a non nullable object ( model)
+import 'package:mvvm/app/contants.dart';
+import 'package:mvvm/data/requests/forget_request.dart';
+import 'package:mvvm/data/responses/forgot_response.dart';
 import 'package:mvvm/data/responses/responses.dart';
 
 import 'package:mvvm/app/extensions.dart';
+import 'package:mvvm/domain/models/forgot_model.dart';
 import 'package:mvvm/domain/models/model.dart';
 
-const EMPTY = "";
-const ZERO = 0;
 
 extension CustomerResponseMapper on CustomerResponse? {
   Customer toDomain() {
@@ -27,5 +29,11 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
   Authentication toDomain() {
     return Authentication(
         this?.customer?.toDomain(),  this?.contacts?.toDomain());
+  }
+}
+extension ForgotResponseMapper on ForgotResponse? {
+  Forgot toDomain() {
+    return Forgot(
+        this?.support.orEmpty()?? EMPTY);
   }
 }

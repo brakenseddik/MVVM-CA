@@ -7,7 +7,9 @@ import 'package:mvvm/data/network/dio_factory.dart';
 import 'package:mvvm/data/network/network_info.dart';
 import 'package:mvvm/data/repository/repo_implementor.dart';
 import 'package:mvvm/domain/repositories/repository.dart';
+import 'package:mvvm/domain/usecases/forgot_usecase.dart';
 import 'package:mvvm/domain/usecases/login_usecase.dart';
+import 'package:mvvm/presentation/forgot_password/forgot_password_viemodel.dart';
 import 'package:mvvm/presentation/login/login_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,16 +45,15 @@ Future<void> initAppModule() async {
       () => RepositoryImplementor(instance(), instance()));
 }
 
-initLoginModule(){
-  if(!GetIt.I.isRegistered<LoginUseCase>()){
+initLoginModule() {
+  if (!GetIt.I.isRegistered<LoginUseCase>()) {
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+  }}
+  initForgotModule() {
+    if (!GetIt.I.isRegistered<ForgotUseCase>()) {
+      instance.registerFactory<ForgotUseCase>(() => ForgotUseCase(instance()));
+      instance.registerFactory<ForgotPassViewModel>(
+          () => ForgotPassViewModel(instance()));
+    }
   }
-}
-
-
-
-
-
-
-

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mvvm/app/contants.dart';
 import 'package:mvvm/data/mappers/mapper.dart';
 import 'package:mvvm/data/network/failure.dart';
 import 'package:mvvm/presentation/resources/assets_manager.dart';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/app/app_prefs.dart';
+import 'package:mvvm/app/di.dart';
 import 'package:mvvm/presentation/forgot_password/forgot_password_viemodel.dart';
 import 'package:mvvm/presentation/resources/assets_manager.dart';
 import 'package:mvvm/presentation/resources/strings_manager.dart';
@@ -13,7 +15,8 @@ class ForgotPasswordView extends StatefulWidget {
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   TextEditingController _emailController = TextEditingController();
-  ForgotPassViewModel _forgotPassViewModel = ForgotPassViewModel();
+  ForgotPassViewModel _forgotPassViewModel = instance<ForgotPassViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -59,7 +62,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         child: ElevatedButton(
                             onPressed: (snapshot.data ?? false)
                                 ? () {
-                                    // _viewModel.login();
+                                    _forgotPassViewModel.forgot();
                                   }
                                 : null,
                             child: Text(AppStrings.send)),
@@ -85,7 +88,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   _bind() {
- _forgotPassViewModel.start();
-    _emailController
-        .addListener(() => _forgotPassViewModel.setUserName(_emailController.text));  }
+    _forgotPassViewModel.start();
+    _emailController.addListener(
+        () => _forgotPassViewModel.setUserName(_emailController.text));
+  }
 }
