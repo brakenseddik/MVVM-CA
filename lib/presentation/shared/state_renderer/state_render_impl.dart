@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm/app/contants.dart';
-import 'package:mvvm/data/mappers/mapper.dart';
 import 'package:mvvm/presentation/resources/strings_manager.dart';
 import 'package:mvvm/presentation/shared/state_renderer/state_renderer.dart';
 
@@ -61,14 +59,32 @@ class LoadingState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 }
 
+class SuccessState extends FlowState {
+  String message;
+  SuccessState(
+    this.message,
+  );
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() =>
+      StateRendererType.POPUP_SUCCESS_STATE;
+}
+
 extension FlowStateExtension on FlowState {
+  dismissDialog(BuildContext context) {
+    if (_isThereCurrentDialogShowing(context)) {
+      Navigator.of(context, rootNavigator: true).pop(true);
+    }
+  }
+
   Widget getScreenWidget(BuildContext context, Widget screenContent,
       Function retryActionFunction) {
     switch (this.runtimeType) {
       case LoadingState:
         {
-          if (getStateRendererType() ==
-              StateRendererType.POPUP_LOADING_STATE) {
+          if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             showPopUp(context, getStateRendererType(), getMessage());
             return screenContent;
           } else {
@@ -82,8 +98,7 @@ extension FlowStateExtension on FlowState {
       case ErrorState:
         {
           dismissDialog(context);
-          if (getStateRendererType() ==
-              StateRendererType.POPUP_ERROR_STATE) {
+          if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             showPopUp(context, getStateRendererType(), getMessage());
             return screenContent;
           } else {
@@ -107,6 +122,14 @@ extension FlowStateExtension on FlowState {
           dismissDialog(context);
           return screenContent;
         }
+      case SuccessState:
+        {
+          dismissDialog(context);
+          showPopUp(
+              context, StateRendererType.POPUP_SUCCESS_STATE, getMessage(),
+              title: AppStrings.success);
+          return screenContent;
+        }
 
       default:
         {
@@ -115,17 +138,9 @@ extension FlowStateExtension on FlowState {
     }
   }
 
-   dismissDialog(BuildContext context) {
-    if (_isThereCurrentDialogShowing(context)) {
-      Navigator.of(context, rootNavigator: true).pop(true);
-    }
-  }
-
-  _isThereCurrentDialogShowing(BuildContext context) =>
-      ModalRoute.of(context)?.isCurrent != true;
-
   showPopUp(
-      BuildContext context, StateRendererType stateRenderType, String message) {
+      BuildContext context, StateRendererType stateRenderType, String message,
+      {String title = EMPTY}) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) => showDialog(
         context: context,
         builder: (context) {
@@ -133,7 +148,11 @@ extension FlowStateExtension on FlowState {
             stateRendererType: stateRenderType,
             retryAction: () {},
             message: message,
+            title: title,
           );
         }));
   }
+
+  _isThereCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
 }

@@ -8,7 +8,7 @@ import 'package:mvvm/presentation/shared/state_renderer/state_renderer.dart';
 
 class ForgotPassViewModel extends BaseViewModel
     with ForgotPassViewModelInputs, ForgotPassViewModelOutputs {
-  StreamController _userInputStreamController =
+  StreamController _emailStreamController =
       StreamController<String>.broadcast();
 
   ForgotUseCase _forgotUseCase;
@@ -16,15 +16,15 @@ class ForgotPassViewModel extends BaseViewModel
   String email = "";
   ForgotPassViewModel(this._forgotUseCase);
   @override
-  Sink get inputUserName => _userInputStreamController.sink;
+  Sink get inputUserName => _emailStreamController.sink;
 
   @override
-  Stream<bool> get isOutputIsUserNameValid => _userInputStreamController.stream
+  Stream<bool> get isOutputIsUserNameValid => _emailStreamController.stream
       .map((userName) => _isUserNameValid(userName));
 
   @override
   void dispose() {
-    _userInputStreamController.close();
+    _emailStreamController.close();
   }
 
   @override
@@ -41,7 +41,7 @@ class ForgotPassViewModel extends BaseViewModel
         (data) => {
               // right -> success (data)
               log("success" + data.toString()),
-              inputState.add(ContentState()),
+              inputState.add(SuccessState(data.toString())),
               // navigate to main screen
             });
   }
@@ -49,13 +49,12 @@ class ForgotPassViewModel extends BaseViewModel
   @override
   setUserName(String userName) {
     inputUserName.add(userName);
-    email = userName;
+    this.email = userName;
   }
 
   @override
   void start() {
-        inputState.add(ContentState());
-
+    inputState.add(ContentState());
   }
 
   bool _isUserNameValid(String userName) {

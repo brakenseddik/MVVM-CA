@@ -20,6 +20,7 @@ class AppStrings {
   static const String password = "Password";
   static const String login = "Login";
   static const String send = "Send";
+  static const String success = "Success";
   static const String forgetPassword = "Forget password";
   static const String registerText = "Not a member ? Sign up";
   static const String loading = "Loading...";

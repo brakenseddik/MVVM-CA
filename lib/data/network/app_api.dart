@@ -10,13 +10,23 @@ part 'app_api.g.dart';
 abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
 
+  @POST("/customers/forgot")
+  Future<ForgotResponse> forgot(
+    @Field("email") String email,
+  );
   @POST("/customers/login")
   Future<AuthenticationResponse> login(
     @Field("email") String email,
     @Field("password") String password,
   );
-  @POST("/customers/forgot")
-  Future<ForgotResponse> forgot(
+
+  @POST("/customers/register")
+  Future<AuthenticationResponse> register(
     @Field("email") String email,
+    @Field("password") String password,
+    @Field("name") String name,
+    @Field("code") String code,
+    @Field("mobile") String mobile,
+    @Field("picture") String picture,
   );
 }

@@ -18,6 +18,22 @@ class _AppServiceClient implements AppServiceClient {
   String? baseUrl;
 
   @override
+  Future<ForgotResponse> forgot(email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgotResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/customers/forgot',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgotResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AuthenticationResponse> login(email, password) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -34,18 +50,26 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<ForgotResponse> forgot(email) async {
+  Future<AuthenticationResponse> register(
+      email, password, name, code, mobile, picture) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'email': email};
+    final _data = {
+      'email': email,
+      'password': password,
+      'name': name,
+      'code': code,
+      'mobile': mobile,
+      'picture': picture
+    };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ForgotResponse>(
+        _setStreamType<AuthenticationResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/customers/forgot',
+                .compose(_dio.options, '/customers/register',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ForgotResponse.fromJson(_result.data!);
+    final value = AuthenticationResponse.fromJson(_result.data!);
     return value;
   }
 

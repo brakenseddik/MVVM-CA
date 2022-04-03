@@ -5,6 +5,7 @@ import 'package:mvvm/presentation/forgot_password/forgot_password_viemodel.dart'
 import 'package:mvvm/presentation/resources/assets_manager.dart';
 import 'package:mvvm/presentation/resources/strings_manager.dart';
 import 'package:mvvm/presentation/resources/values_manager.dart';
+import 'package:mvvm/presentation/shared/state_renderer/state_render_impl.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({Key? key}) : super(key: key);
@@ -18,6 +19,64 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   ForgotPassViewModel _forgotPassViewModel = instance<ForgotPassViewModel>();
   AppPreferences _appPreferences = instance<AppPreferences>();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<FlowState>(
+      stream: _forgotPassViewModel.outputState,
+      builder: (_, snapshot) {
+        return snapshot.data?.getScreenWidget(
+                context,
+                _getContent(
+                  emailController: _emailController,
+                  forgotPassViewModel: _forgotPassViewModel,
+                  formKey: _formKey,
+                ), () {
+              _forgotPassViewModel.forgot();
+            }) ??
+            _getContent(
+              emailController: _emailController,
+              forgotPassViewModel: _forgotPassViewModel,
+              formKey: _formKey,
+            );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _forgotPassViewModel.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _bind();
+
+    super.initState();
+  }
+
+  _bind() {
+    _forgotPassViewModel.start();
+    _emailController.addListener(
+        () => _forgotPassViewModel.setUserName(_emailController.text));
+  }
+}
+
+class _getContent extends StatelessWidget {
+  final GlobalKey<FormState> _formKey;
+
+  final ForgotPassViewModel _forgotPassViewModel;
+  final TextEditingController _emailController;
+  const _getContent({
+    Key? key,
+    required GlobalKey<FormState> formKey,
+    required ForgotPassViewModel forgotPassViewModel,
+    required TextEditingController emailController,
+  })  : _formKey = formKey,
+        _forgotPassViewModel = forgotPassViewModel,
+        _emailController = emailController,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,24 +131,5 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _forgotPassViewModel.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _bind();
-
-    super.initState();
-  }
-
-  _bind() {
-    _forgotPassViewModel.start();
-    _emailController.addListener(
-        () => _forgotPassViewModel.setUserName(_emailController.text));
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mvvm/app/contants.dart';
-import 'package:mvvm/data/mappers/mapper.dart';
 import 'package:mvvm/data/network/failure.dart';
 import 'package:mvvm/presentation/resources/assets_manager.dart';
 import 'package:mvvm/presentation/resources/color_manager.dart';
@@ -115,6 +114,13 @@ class StateRenderer extends StatelessWidget {
           _getMessageWidget(message),
           _getRetryWidget(AppStrings.ok, context)
         ]);
+      case StateRendererType.POPUP_SUCCESS_STATE:
+        return _getPopUpDialog(context, [
+          _getAnimatedWidget(JsonAssets.success),
+          _getMessageWidget(title),
+          _getMessageWidget(message),
+          _getRetryWidget(AppStrings.ok, context)
+        ]);
       case StateRendererType.FULLSCREEN_LOADING_STATE:
         return _getItemsColumn([
           _getAnimatedWidget(JsonAssets.loading),
@@ -141,6 +147,7 @@ enum StateRendererType {
   //POPUP
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
+  POPUP_SUCCESS_STATE,
   // FULL SCREEN
   FULLSCREEN_LOADING_STATE,
   FULLSCREEN_ERROR_STATE,
