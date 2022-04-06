@@ -5,7 +5,7 @@ import 'package:mvvm/presentation/login/login_view.dart';
 import 'package:mvvm/presentation/login/login_viewmodel.dart';
 import 'package:mvvm/presentation/main/main_screen.dart';
 import 'package:mvvm/presentation/onboarding/onboarding_view.dart';
-import 'package:mvvm/presentation/register/register_screen.dart';
+import 'package:mvvm/presentation/register/register_view.dart';
 import 'package:mvvm/presentation/resources/strings_manager.dart';
 import 'package:mvvm/presentation/splash/splash_screen.dart';
 import 'package:mvvm/presentation/store_details/store_details_screen.dart';
