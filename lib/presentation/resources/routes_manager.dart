@@ -2,23 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/app/di.dart';
 import 'package:mvvm/presentation/forgot_password/forgot_password_view.dart';
 import 'package:mvvm/presentation/login/login_view.dart';
-import 'package:mvvm/presentation/login/login_viewmodel.dart';
 import 'package:mvvm/presentation/main/main_screen.dart';
 import 'package:mvvm/presentation/onboarding/onboarding_view.dart';
 import 'package:mvvm/presentation/register/register_view.dart';
 import 'package:mvvm/presentation/resources/strings_manager.dart';
 import 'package:mvvm/presentation/splash/splash_screen.dart';
 import 'package:mvvm/presentation/store_details/store_details_screen.dart';
-
-class Routes {
-  static const String splashRoute = '/';
-  static const String onBoardingRoute = '/onBoarding';
-  static const String loginRoute = '/login';
-  static const String registerRoute = '/register';
-  static const String mainRoute = '/main';
-  static const String forgotPasswordRoute = '/forgotPassword';
-  static const String storeDetailsRoute = '/storeDetails';
-}
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -34,6 +23,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LoginView());
 
       case Routes.registerRoute:
+        initRegisterModule();
         return MaterialPageRoute(builder: (_) => const RegisterView());
 
       case Routes.forgotPasswordRoute:
@@ -63,4 +53,14 @@ class RouteGenerator {
               ),
             ));
   }
+}
+
+class Routes {
+  static const String splashRoute = '/';
+  static const String onBoardingRoute = '/onBoarding';
+  static const String loginRoute = '/login';
+  static const String registerRoute = '/register';
+  static const String mainRoute = '/main';
+  static const String forgotPasswordRoute = '/forgotPassword';
+  static const String storeDetailsRoute = '/storeDetails';
 }

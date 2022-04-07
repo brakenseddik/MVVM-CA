@@ -9,8 +9,10 @@ import 'package:mvvm/data/repository/repo_implementor.dart';
 import 'package:mvvm/domain/repositories/repository.dart';
 import 'package:mvvm/domain/usecases/forgot_usecase.dart';
 import 'package:mvvm/domain/usecases/login_usecase.dart';
+import 'package:mvvm/domain/usecases/register_usecase.dart';
 import 'package:mvvm/presentation/forgot_password/forgot_password_viemodel.dart';
 import 'package:mvvm/presentation/login/login_viewmodel.dart';
+import 'package:mvvm/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final instance = GetIt.instance;
@@ -50,10 +52,19 @@ initLoginModule() {
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
   }}
+
   initForgotModule() {
     if (!GetIt.I.isRegistered<ForgotUseCase>()) {
       instance.registerFactory<ForgotUseCase>(() => ForgotUseCase(instance()));
       instance.registerFactory<ForgotPassViewModel>(
           () => ForgotPassViewModel(instance()));
+    }
+  }
+  
+  initRegisterModule() {
+    if (!GetIt.I.isRegistered<RegisterUseCase>()) {
+      instance.registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
+      instance.registerFactory<RegisterViewModel>(
+          () => RegisterViewModel(instance()));
     }
   }
