@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/app/app_prefs.dart';
 import 'package:mvvm/data/data_source/remote_datasource.dart';
 import 'package:mvvm/data/network/app_api.dart';
@@ -62,9 +63,12 @@ initLoginModule() {
   }
   
   initRegisterModule() {
-    if (!GetIt.I.isRegistered<RegisterUseCase>()) {
-      instance.registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
-      instance.registerFactory<RegisterViewModel>(
-          () => RegisterViewModel(instance()));
-    }
+  if (!GetIt.I.isRegistered<RegisterUseCase>()) {
+    
+    instance
+        .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
+    instance.registerFactory<RegisterViewModel>(
+        () => RegisterViewModel(instance()));
+    instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
+}

@@ -27,4 +27,15 @@ class AppStrings {
 
   static const String retry = "Try again!!";
   static const String ok = "OK";
+
+  static const String mobileNumber = "Mobile number";
+
+  static const String emailHint = "Email address";
+  static const String profilePicture = "Profile picture";
+
+  static const String photoGalley= "Photo from Gallery";
+
+  static const String photoCamera="Photo from the camera";
+
+  static const String register="Register";
 }

@@ -40,6 +40,6 @@ class RemoteDataSourceImplementor implements RemoteDataSource {
         registerRequest.name,
         registerRequest.code,
         registerRequest.mobile,
-        registerRequest.picture);
+        "");
   }
 }
