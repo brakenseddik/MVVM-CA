@@ -33,9 +33,13 @@ class AppStrings {
   static const String emailHint = "Email address";
   static const String profilePicture = "Profile picture";
 
-  static const String photoGalley= "Photo from Gallery";
+  static const String photoGalley = "Photo from Gallery";
 
-  static const String photoCamera="Photo from the camera";
+  static const String photoCamera = "Photo from the camera";
 
-  static const String register="Register";
+  static const String register = "Register";
+  static const String home = "Home";
+  static const String notifications = "Notifications";
+  static const String search = "Search";
+  static const String settings = "Settings";
 }
