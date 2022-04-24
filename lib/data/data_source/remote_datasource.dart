@@ -3,10 +3,12 @@ import 'package:mvvm/data/requests/forget_request.dart';
 import 'package:mvvm/data/requests/login_request.dart';
 import 'package:mvvm/data/requests/register_request.dart';
 import 'package:mvvm/data/responses/forgot_response.dart';
+import 'package:mvvm/data/responses/home_response.dart';
 import 'package:mvvm/data/responses/responses.dart';
 
 abstract class RemoteDataSource {
   Future<ForgotResponse> forgot(ForgotRequest forgotRequest);
+  Future<HomeResponse> getHome();
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
   Future<AuthenticationResponse> register(RegisterRequest registerRequest);
 }
@@ -21,6 +23,11 @@ class RemoteDataSourceImplementor implements RemoteDataSource {
   @override
   Future<ForgotResponse> forgot(ForgotRequest forgotRequest) async {
     return await _appServicesClient.forgot(forgotRequest.email);
+  }
+
+  @override
+  Future<HomeResponse> getHome() async {
+    return await _appServicesClient.getHome();
   }
 
   @override

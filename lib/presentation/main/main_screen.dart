@@ -67,7 +67,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  onTap(int index) {
+ void onTap(int index) {
     setState(() {
       _currentIndex = index;
       _title = titles[index];

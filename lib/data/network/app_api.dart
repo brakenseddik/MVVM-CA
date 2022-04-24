@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mvvm/app/contants.dart';
 import 'package:mvvm/data/responses/forgot_response.dart';
+import 'package:mvvm/data/responses/home_response.dart';
 import 'package:mvvm/data/responses/responses.dart';
 import 'package:retrofit/http.dart';
 
@@ -14,6 +15,9 @@ abstract class AppServiceClient {
   Future<ForgotResponse> forgot(
     @Field("email") String email,
   );
+  @GET("/home")
+  Future<HomeResponse> getHome();
+
   @POST("/customers/login")
   Future<AuthenticationResponse> login(
     @Field("email") String email,
