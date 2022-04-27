@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:mvvm/data/data_source/remote_datasource.dart';
 import 'package:mvvm/data/mappers/mapper.dart';
@@ -55,6 +57,7 @@ class RepositoryImplementor implements Repository {
               response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
+        log(error.toString());
         return (Left(ErrorHandler.handle(error).failure));
       }
     } else {

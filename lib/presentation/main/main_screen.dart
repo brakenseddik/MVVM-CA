@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/presentation/main/home_view.dart';
+import 'package:mvvm/presentation/main/home/home_view.dart';
 import 'package:mvvm/presentation/main/notifications_view.dart';
 import 'package:mvvm/presentation/main/search_view.dart';
 import 'package:mvvm/presentation/main/settings_view.dart';
